@@ -1,0 +1,9 @@
+.venv
+auth.txt
+*.sqlite3
+*.sqlite3-journal
+*.log
+*.pot
+*.pyc
+__pycache__/
+
