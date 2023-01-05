@@ -13,3 +13,8 @@ class YoutubeVideo(models.Model):
     
     def __str__(self):
         return f'{self.video_id} -> {self.title}'
+    
+    def save(self, *args, **kwargs):
+        super(YoutubeVideo, self).save(*args, **kwargs)
+        from Index.index import Index
+        Index().addObjectToIndex(self)
