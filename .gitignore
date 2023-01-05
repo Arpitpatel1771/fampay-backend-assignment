@@ -17,6 +17,10 @@ auth.txt
 *.pyc
 __pycache__/
 
+# migrations
+**/migrations/**
+!**/migrations/__init__.py
+
 # environment files
 *.env
 
