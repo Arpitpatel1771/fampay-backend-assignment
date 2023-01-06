@@ -6,6 +6,7 @@ const state = {
         filter: '',
         orderBy: 'date',
         orderDirection: 'desc',
+        enablePagination: true
     },
     data: [],
 
@@ -13,6 +14,7 @@ const state = {
         this.getApiConfig.page = 0;
         this.getApiConfig.size = 20;
         this.getApiConfig.requestPending = false;
+        this.getApiConfig.enablePagination = true;
         this.data = []
     }
 }
@@ -90,7 +92,7 @@ async function getVideoData(){
         orderBy: state.getApiConfig.orderBy,
         orderDirection: state.getApiConfig.orderDirection
     })
-    lg(url)
+    
     state.getApiConfig.requestPending = true
 
     let response = await fetch(url, {
@@ -127,7 +129,7 @@ async function handleScroll(event){
     const clientHeight = event.target.clientHeight;
 
     let scrollPercent = scrollTop/(scrollHeight - clientHeight)*100;
-    if(scrollPercent > 80 && !state.getApiConfig.requestPending){
+    if(scrollPercent > 80 && !state.getApiConfig.requestPending && state.getApiConfig.enablePagination){
         getVideoData()
     }
 }
@@ -148,6 +150,31 @@ function changeSortBy(){
     refresh()
 }
 
+async function search(){
+    const query = document.getElementById('searchbox').value
+
+    if(query===''){
+        refresh()
+    }else{
+        let url = generateUrl(`http://localhost:8000/api/Landingpage/search`,{
+            query: query
+        })
+
+        let response = await fetch(url, {
+            method: "GET",
+            redirect: "follow"
+        })
+    
+        response = await response.text()
+        response = await JSON.parse(response)
+        if(response.responseCode === 200){
+            state.getApiConfig.enablePagination = false
+            populateVideos(response.payload, true)
+        }
+    }
+
+}
+
 // Initial Request
 getVideoData()
 
@@ -155,6 +182,7 @@ getVideoData()
 document.getElementById('video-grid').addEventListener('scroll', handleScroll)
 document.getElementById('filter').addEventListener('change', changeFilter)
 document.getElementById('sort').addEventListener('change', changeSortBy)
+document.getElementById('search-button').addEventListener('click', search)
 
 // Responsiveness
 changeGridSizeForResponsiveness()

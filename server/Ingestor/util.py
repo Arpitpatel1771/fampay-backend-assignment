@@ -1,6 +1,8 @@
 import datetime
 from Ingestor.models import YoutubeVideo
 
+def get_now():
+    return datetime.datetime.now(datetime.timezone.utc)
 
 def utcDatetimeToRFC3339(datetime_obj: datetime.datetime) -> str:
     # Removing the +00:00 at the end and adding a Z at the end
@@ -35,14 +37,46 @@ def saveYoutubeVideoFromJson(dictionary: dict):
     )
 
 def serializeYoutubeVideoToJson(youtubevideo: YoutubeVideo):
-    json_object = {
-        "video_id": youtubevideo.video_id,
-        "published_at": youtubevideo.published_at,
-        "channel_id": youtubevideo.channel_id,
-        "title": youtubevideo.title,
-        "description": youtubevideo.description,
-        "thumbnail": youtubevideo.thumbnail,
-        "channel_title": youtubevideo.channel_title
+    
+    data = {
+        'video_id': youtubevideo.video_id,
+        'channel_id': youtubevideo.channel_id,
+        'title': youtubevideo.title,
+        'description': youtubevideo.description,
+        'thumbnail': youtubevideo.thumbnail,
+        'channel_title': youtubevideo.channel_title,
+        'published_at': youtubevideo.published_at,
     }
     
-    return json_object
+    # Get time difference string
+    # i.e. "Uploaded 2 months ago" or "Uploaded Just Now"
+    published_at = youtubevideo.published_at
+    now = get_now()
+    published_info = ''
+    if published_at.year != now.year:
+        timedelta = now.year - published_at.year
+        time_metric = 'years' if timedelta > 1 else 'year'
+    elif published_at.month != now.month:
+        timedelta = now.month - published_at.month
+        time_metric = 'months' if timedelta > 1 else 'month'
+    elif published_at.day != now.day:
+        timedelta = now.day - published_at.day
+        time_metric = 'days' if timedelta > 1 else 'day'
+    elif published_at.hour != now.hour:
+        timedelta = now.hour - published_at.hour
+        time_metric = 'hours' if timedelta > 1 else 'hour'
+    elif published_at.minute != now.minute:
+        timedelta = now.minute - published_at.minute
+        time_metric = 'minutes' if timedelta > 1 else 'minute'
+    elif published_at.second != now.second:
+        timedelta = now.second - published_at.second
+        time_metric = 'seconds' if timedelta > 1 else 'second'
+    else:
+        published_info = 'Uploaded Just Now'
+        
+    if published_info == '':
+        published_info = f'Uploaded {timedelta} {time_metric} ago'
+    
+    data['published_info'] = published_info
+    
+    return data

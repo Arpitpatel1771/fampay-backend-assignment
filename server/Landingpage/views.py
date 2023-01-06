@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 from Ingestor.models import YoutubeVideo, RequestDetails, Keys
 from Index.index import Index
-
+from Ingestor.util import serializeYoutubeVideoToJson
 def get_now():
     return datetime.datetime.now(datetime.timezone.utc)
 
@@ -59,47 +59,7 @@ def get_all_videos(request):
         video_data = []
         
         for video in queryset:
-            data = {
-                'video_id': video.video_id,
-                'channel_id': video.channel_id,
-                'title': video.title,
-                'description': video.description,
-                'thumbnail': video.thumbnail,
-                'channel_title': video.channel_title,
-                'published_at': video.published_at,
-            }
-            
-            # Get time difference string
-            # i.e. "Uploaded 2 months ago" or "Uploaded Just Now"
-            published_at = video.published_at
-            now = get_now()
-            published_info = ''
-            if published_at.year != now.year:
-                timedelta = now.year - published_at.year
-                time_metric = 'years' if timedelta > 1 else 'year'
-            elif published_at.month != now.month:
-                timedelta = now.month - published_at.month
-                time_metric = 'months' if timedelta > 1 else 'month'
-            elif published_at.day != now.day:
-                timedelta = now.day - published_at.day
-                time_metric = 'days' if timedelta > 1 else 'day'
-            elif published_at.hour != now.hour:
-                timedelta = now.hour - published_at.hour
-                time_metric = 'hours' if timedelta > 1 else 'hour'
-            elif published_at.minute != now.minute:
-                timedelta = now.minute - published_at.minute
-                time_metric = 'minutes' if timedelta > 1 else 'minute'
-            elif published_at.second != now.second:
-                timedelta = now.second - published_at.second
-                time_metric = 'seconds' if timedelta > 1 else 'second'
-            else:
-                published_info = 'Uploaded Just Now'
-                
-            if published_info == '':
-                published_info = f'Uploaded {timedelta} {time_metric} ago'
-            
-            data['published_info'] = published_info
-            video_data.append(data)
+            video_data.append(serializeYoutubeVideoToJson(video))
         
         return JsonResponse({
             'responseCode': 200,
