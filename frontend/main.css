@@ -88,11 +88,33 @@ div.request-details:hover {
     text-shadow: 0px 0px 15px white;
 }
 
+div.filter-row{
+    position: absolute;
+    top: 70px;
+    padding: 10px;
+    width: 200vw;
+    background-color: rgba(91, 12, 12, 0.719);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    gap: 10px;
+}
+
+label {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+select {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 div.video-grid {
     width: 100%;
     height: 100%;
     padding: 20px;
-    padding-top: 90px;
+    padding-top: 120px;
     color: white;
     display: grid;
     grid-template-columns: auto auto auto auto;

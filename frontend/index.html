@@ -16,6 +16,20 @@
             </div>
             <div class="request-details">&#x2630;</div>
         </nav>
+        <div class="filter-row">
+            <label for="filter">Filter By:</label>
+            <select name="filter" id="filter">
+                <option value="">-----</option>
+                <option value="day">Today</option>
+                <option value="month">This month</option>
+                <option value="year">This year</option>
+            </select>
+            <label for="sort">Sort By Date:</label>
+            <select name="sort" id="sort">
+                <option value="asc">Ascending</option>
+                <option value="desc" selected>Descending</option>
+            </select>
+        </div>
         <div id="video-grid" class="video-grid">
         </div>
         <!-- <div class="overlay">

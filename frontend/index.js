@@ -2,7 +2,10 @@ const state = {
     getApiConfig: {
         page: 0,
         size: 20,
-        requestPending: false
+        requestPending: false,
+        filter: '',
+        orderBy: 'date',
+        orderDirection: 'desc',
     },
     data: [],
 
@@ -48,7 +51,7 @@ function populateVideos(arrayOfVideoData, rebuild = false){
                         <div class="channel-title">
                             <a href="${channelUrl}" class="channel-title" target="_blank">${videoData.channel_title}</a>
                         </div>
-                        <div class="published-at">${videoData.published_at}</div>
+                        <div class="published-at">${videoData.published_info}</div>
                     </div>
                 </div>
             </div>
@@ -62,14 +65,32 @@ function populateVideos(arrayOfVideoData, rebuild = false){
     }
 }
 
+function generateUrl(url, queryParams){
+    // generates a proper url from queryParams
+    // forgive my code here _/\_
+    let temp = true
+    for (let key in queryParams){
+        url += temp ? '?' : '&'
+        temp = false
+        url += `${key}=${queryParams[key]}`
+    }
+    return url
+}
+
 async function getVideoData(){
     let newPage = state.getApiConfig.page + 1
     if(state.getApiConfig.totalPages && newPage > state.getApiConfig.totalPages){
         return
     }
 
-    let url = `http://localhost:8000/api/Landingpage/list?page=${newPage}&size=${state.getApiConfig.size}`
-
+    let url = generateUrl('http://localhost:8000/api/Landingpage/list',{
+        page: newPage,
+        size: state.getApiConfig.size,
+        filter: state.getApiConfig.filter,
+        orderBy: state.getApiConfig.orderBy,
+        orderDirection: state.getApiConfig.orderDirection
+    })
+    lg(url)
     state.getApiConfig.requestPending = true
 
     let response = await fetch(url, {
@@ -117,11 +138,23 @@ function refresh(){
     populateVideos(state.data, true)
 }
 
+function changeFilter(){
+    state.getApiConfig.filter = document.getElementById('filter').value
+    refresh()
+}
+
+function changeSortBy(){
+    state.getApiConfig.orderDirection = document.getElementById('sort').value
+    refresh()
+}
+
 // Initial Request
 getVideoData()
 
 // Event Listeners
 document.getElementById('video-grid').addEventListener('scroll', handleScroll)
+document.getElementById('filter').addEventListener('change', changeFilter)
+document.getElementById('sort').addEventListener('change', changeSortBy)
 
 // Responsiveness
 changeGridSizeForResponsiveness()

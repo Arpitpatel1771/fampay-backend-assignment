@@ -76,22 +76,22 @@ def get_all_videos(request):
             published_info = ''
             if published_at.year != now.year:
                 timedelta = now.year - published_at.year
-                time_metric = 'years' if timedelta == 1 else 'year'
+                time_metric = 'years' if timedelta > 1 else 'year'
             elif published_at.month != now.month:
                 timedelta = now.month - published_at.month
-                time_metric = 'months' if timedelta == 1 else 'month'
+                time_metric = 'months' if timedelta > 1 else 'month'
             elif published_at.day != now.day:
                 timedelta = now.day - published_at.day
-                time_metric = 'days' if timedelta == 1 else 'day'
+                time_metric = 'days' if timedelta > 1 else 'day'
             elif published_at.hour != now.hour:
                 timedelta = now.hour - published_at.hour
-                time_metric = 'hours' if timedelta == 1 else 'hour'
+                time_metric = 'hours' if timedelta > 1 else 'hour'
             elif published_at.minute != now.minute:
                 timedelta = now.minute - published_at.minute
-                time_metric = 'minutes' if timedelta == 1 else 'minute'
+                time_metric = 'minutes' if timedelta > 1 else 'minute'
             elif published_at.second != now.second:
                 timedelta = now.second - published_at.second
-                time_metric = 'seconds' if timedelta == 1 else 'second'
+                time_metric = 'seconds' if timedelta > 1 else 'second'
             else:
                 published_info = 'Uploaded Just Now'
                 
