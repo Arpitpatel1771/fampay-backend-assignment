@@ -203,4 +203,41 @@ div.wrapper{
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0px 0px 24px -5px black;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+div.wrapper > div.title{
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 20px
+}
+
+div.api-input{
+    width: 100%;
+    padding: 20px;
+}
+
+input.api-input{
+    width: 100%;
+    font-size: 20px;
+    padding: 5px 15px 5px 15px;
+}
+div.api-status{
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+}
+button.api-submit{
+    width: 20%;
+    min-width: 50px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    padding: 10px;
+    cursor: pointer;
 }

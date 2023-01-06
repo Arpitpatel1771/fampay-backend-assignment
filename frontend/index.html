@@ -12,9 +12,11 @@
             <div class="info">Sasta YouTube</div>
             <div class="search">
                 <input id="searchbox" class="search" type="text" />
-                <button id="search-button" type="button" class="search">Search</button>
+                <button id="search-button" type="button" class="search">
+                    Search
+                </button>
             </div>
-            <div class="request-details">&#x2630;</div>
+            <div class="request-details" id="request-details">&#x2630;</div>
         </nav>
         <div class="filter-row">
             <label for="filter">Filter By:</label>
@@ -30,13 +32,7 @@
                 <option value="desc" selected>Descending</option>
             </select>
         </div>
-        <div id="video-grid" class="video-grid">
-        </div>
-        <!-- <div class="overlay">
-            <div class="wrapper">
-                
-            </div>
-        </div> -->
+        <div id="video-grid" class="video-grid"></div>
     </body>
     <script src="./index.js" type="module"></script>
 </html>
