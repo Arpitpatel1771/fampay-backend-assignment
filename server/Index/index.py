@@ -54,7 +54,7 @@ class Index:
 
         for character in str:
             if character not in allowed_characters_for_tokenization:
-                str = str.replace(character, '')
+                str = str.replace(character, ' ')
 
         tokens = str.split(' ')
 
