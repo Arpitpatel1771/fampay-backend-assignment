@@ -24,3 +24,5 @@ __pycache__/
 # environment files
 *.env
 
+# indexing file
+index.json

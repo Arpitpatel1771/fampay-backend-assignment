@@ -17,6 +17,8 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load Environment variables
 load_dotenv(join(dirname(__file__), '.env'))
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +28,7 @@ load_dotenv(join(dirname(__file__), '.env'))
 SECRET_KEY = "django-insecure-%+82e2uxfxkqmpt8d92$v&a3g%_073j8+y152mk8m61u*p&5n="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.getenv('ENVIRONMENT_NAME') == 'PRODUCTION' else True
+DEBUG = True if os.getenv('ENVIRONMENT_NAME') == 'LOCAL' else False
 
 ALLOWED_HOSTS = []
 

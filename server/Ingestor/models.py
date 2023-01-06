@@ -18,3 +18,19 @@ class YoutubeVideo(models.Model):
         super(YoutubeVideo, self).save(*args, **kwargs)
         from Index.index import Index
         Index().addObjectToIndex(self)
+        
+class Keys(models.Model):
+    api_key = models.CharField(max_length=300, unique=True)
+    exhausted_on = models.DateTimeField(null=True, blank=True)
+    
+    def __str__(self):
+        return f'{self.api_key}: exhausted_on -> {str(self.exhausted_on)}'
+
+class RequestDetails(models.Model):
+    query = models.TextField()
+    published_after = models.DateTimeField()
+    page_token = models.CharField(max_length=50, null=True, blank=True)
+    
+    def __str__(self):
+        return f'query -{self.query}, published_after - {str(self.published_after)}'
+    

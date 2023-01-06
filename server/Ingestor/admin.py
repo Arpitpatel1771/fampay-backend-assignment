@@ -5,6 +5,7 @@ from Ingestor.models import *
 @admin.register(YoutubeVideo)
 class YoutubeVideoAdmin(admin.ModelAdmin):
     list_display = [
+        'id',
         'video_id',
         'title',
         'description',
@@ -25,5 +26,11 @@ class YoutubeVideoAdmin(admin.ModelAdmin):
         'channel_title',
         'channel_id'
     ]
-    
-    
+
+@admin.register(Keys)
+class KeysAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'api_key',
+        'exhausted_on'
+    ]
