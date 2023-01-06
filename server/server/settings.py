@@ -28,9 +28,9 @@ load_dotenv(join(dirname(__file__), '.env'))
 SECRET_KEY = "django-insecure-%+82e2uxfxkqmpt8d92$v&a3g%_073j8+y152mk8m61u*p&5n="
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv('ENVIRONMENT_NAME') == 'LOCAL' else False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "corsheaders",
     "Landingpage",
     "Ingestor",
     "Index",
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "server.urls"
@@ -107,6 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Internationalization
