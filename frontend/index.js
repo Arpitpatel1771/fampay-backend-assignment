@@ -4,7 +4,14 @@ const state = {
         size: 20,
         requestPending: false
     },
-    data: []
+    data: [],
+
+    resetState() {
+        this.getApiConfig.page = 0;
+        this.getApiConfig.size = 20;
+        this.getApiConfig.requestPending = false;
+        this.data = []
+    }
 }
 
 function lg(){
@@ -102,6 +109,12 @@ async function handleScroll(event){
     if(scrollPercent > 80 && !state.getApiConfig.requestPending){
         getVideoData()
     }
+}
+
+function refresh(){
+    state.resetState();
+    getVideoData()
+    populateVideos(state.data, true)
 }
 
 // Initial Request
