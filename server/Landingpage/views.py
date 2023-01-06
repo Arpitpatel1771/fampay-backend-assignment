@@ -1,7 +1,8 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from Ingestor.models import YoutubeVideo
+from Ingestor.models import YoutubeVideo, RequestDetails
 from Index.index import Index
 
 # Create your views here.
@@ -48,6 +49,32 @@ def search_videos(request):
             'responseCode': 200,
             'responseMessage': 'Success',
             'payload': results
+        })
+        
+    except Exception as exc:
+        print(f'Exception Occured in list api of Landing Page ===> {str(exc)}')
+        return JsonResponse({
+            'responseCode': 500,
+            'responseMessage': 'Error <<500>>: Internal Server Error'
+        })
+
+def change_request_details(request):
+    try:
+        query = str(request.GET.get('query',''))
+        
+        if len(query) < 1:
+            return JsonResponse({
+                'responseCode': 400,
+                'responseMessage': 'Error <<400>>: Query string should be atleast 1 characters long'
+            })
+        
+        request_details = RequestDetails.objects.last()
+        request_details.query = query
+        request_details.save()
+        
+        return JsonResponse({
+            'responseCode': 200,
+            'responseMessage': 'Success'
         })
         
     except Exception as exc:
