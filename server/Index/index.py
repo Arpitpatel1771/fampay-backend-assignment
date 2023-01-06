@@ -4,7 +4,7 @@ import random
 
 from collections import Counter
 from Ingestor.models import YoutubeVideo
-
+from Ingestor.util import serializeYoutubeVideoToJson
 
 class Index:
 
@@ -133,7 +133,7 @@ class Index:
 
         self.saveToFile()
 
-    def search(self, query: str, size: int = 50) -> list[YoutubeVideo]:
+    def search(self, query: str, size: int = 50) -> list[dict]:
         '''
         Search in the index for objects that match the query
         '''
@@ -160,7 +160,7 @@ class Index:
         # Limit the results
         result_ids = result_ids[0:size]
 
-        result = [YoutubeVideo.objects.get(
-            pk=result_id) for result_id in result_ids]
+        result = [serializeYoutubeVideoToJson(YoutubeVideo.objects.get(
+            pk=result_id)) for result_id in result_ids]
 
         return result

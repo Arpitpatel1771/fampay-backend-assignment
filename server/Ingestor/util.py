@@ -33,3 +33,16 @@ def saveYoutubeVideoFromJson(dictionary: dict):
         channel_title=dictionary['snippet']['channelTitle'],
         raw_data=dictionary
     )
+
+def serializeYoutubeVideoToJson(youtubevideo: YoutubeVideo):
+    json_object = {
+        "video_id": youtubevideo.video_id,
+        "published_at": youtubevideo.published_at,
+        "channel_id": youtubevideo.channel_id,
+        "title": youtubevideo.title,
+        "description": youtubevideo.description,
+        "thumbnail": youtubevideo.thumbnail,
+        "channel_title": youtubevideo.channel_title
+    }
+    
+    return json_object

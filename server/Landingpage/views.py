@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from Ingestor.models import YoutubeVideo
+from Index.index import Index
 
 # Create your views here.
 def get_all_videos(request):
@@ -30,3 +31,28 @@ def get_all_videos(request):
             'responseMessage': 'Error <<500>>: Internal Server Error'
         })
 
+def search_videos(request):
+    try:
+        # query params
+        query = str(request.GET.get('query', ''))
+        
+        if len(query) < 1:
+            return JsonResponse({
+                'responseCode': 400,
+                'responseMessage': 'Error <<400>>: Query string should be atleast 1 characters long'
+            })
+        
+        results = Index().search(query=query)
+        
+        return JsonResponse({
+            'responseCode': 200,
+            'responseMessage': 'Success',
+            'payload': results
+        })
+        
+    except Exception as exc:
+        print(f'Exception Occured in list api of Landing Page ===> {str(exc)}')
+        return JsonResponse({
+            'responseCode': 500,
+            'responseMessage': 'Error <<500>>: Internal Server Error'
+        })
