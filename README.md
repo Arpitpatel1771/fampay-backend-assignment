@@ -24,9 +24,9 @@
 
 `python manage.py runserver`
 
-8. Log in to admin and add an initial api key in the 'Keyss' table. without this, frontend wont work.
+8. Log in to admin and add an initial api key in the 'Keyss' table. Leave other fields blank. without this, frontend wont work.
 
-9. Run the background script to ingest data
+9. Run the background script to ingest data every 10 seconds (generally quota is exhausted after 100 requests, so after 1000 seconds, you will need to provide a new api key, or add a lot of api keys at the start itself)
 
 `python manage.py ingest`
 
@@ -79,3 +79,5 @@ query -> comma seperated api keys
 4. Searching by title and description
 
 5. Click the hamburger to add more api keys
+
+6. Basic Responsiveness
