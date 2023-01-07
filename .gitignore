@@ -1,0 +1,28 @@
+# virtual enviroments
+venv
+.venv
+
+# personal files
+auth.txt
+
+# db related files
+*.sqlite3
+*.sqlite3-journal
+
+# log files
+*.log
+
+# django files
+*.pot
+*.pyc
+__pycache__/
+
+# migrations
+**/migrations/**
+!**/migrations/__init__.py
+
+# environment files
+*.env
+
+# indexing file
+index.json

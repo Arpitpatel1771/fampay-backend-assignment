@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sasta Youtube</title>
+        <link rel="stylesheet" href="./main.css" />
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="info">Sasta YouTube</div>
+            <div class="search">
+                <input id="searchbox" class="search" type="text" />
+                <button id="search-button" type="button" class="search">
+                    Search
+                </button>
+            </div>
+            <div class="request-details" id="request-details">&#x2630;</div>
+        </nav>
+        <div class="filter-row">
+            <label for="filter">Filter By:</label>
+            <select name="filter" id="filter">
+                <option value="">-----</option>
+                <option value="day">Today</option>
+                <option value="month">This month</option>
+                <option value="year">This year</option>
+            </select>
+            <label for="sort">Sort By Date:</label>
+            <select name="sort" id="sort">
+                <option value="asc">Ascending</option>
+                <option value="desc" selected>Descending</option>
+            </select>
+        </div>
+        <div id="video-grid" class="video-grid"></div>
+    </body>
+    <script src="./index.js" type="module"></script>
+</html>
