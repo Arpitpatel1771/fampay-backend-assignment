@@ -14,7 +14,7 @@ class Index:
 
     def __init__(self):
         self.readFromFile()
-        if 'documents' not in self.data or 'tokens' not in self.data:
+        if not self.data or 'documents' not in self.data or 'tokens' not in self.data:
             self.data = {
                 'documents': {},
                 'tokens': {}
@@ -46,17 +46,17 @@ class Index:
         return id
 
     @staticmethod
-    def extractTokensFromString(str) -> list[str]:
-        str = str.lower()
+    def extractTokensFromString(input_string):
+        input_string = input_string.lower()
 
         # Allowed Characters are [a-z],[A-Z] & [0-9] only
         allowed_characters_for_tokenization = string.ascii_lowercase + string.digits + ' '
 
-        for character in str:
+        for character in input_string:
             if character not in allowed_characters_for_tokenization:
-                str = str.replace(character, ' ')
+                input_string = input_string.replace(character, ' ')
 
-        tokens = str.split(' ')
+        tokens = input_string.split(' ')
 
         # Remove empty/useless tokens
         tokens = [token for token in tokens if token and token != '']
@@ -85,7 +85,7 @@ class Index:
                 return
 
         doc_id = self.getRandomId(length=10)
-        extracted_tokens = self.extractTokensFromString(str=text)
+        extracted_tokens = self.extractTokensFromString(input_string=text)
 
         documents[doc_id] = {
             'doc_id': doc_id,
@@ -123,7 +123,7 @@ class Index:
 
         del documents[doc_id]
 
-        extracted_tokens = self.extractTokensFromString(str=text)
+        extracted_tokens = self.extractTokensFromString(input_string=text)
 
         for token in extracted_tokens:
             if token in tokens and doc_id in tokens[token]:
@@ -133,7 +133,7 @@ class Index:
 
         self.saveToFile()
 
-    def search(self, query: str, size: int = 50) -> list[dict]:
+    def search(self, query: str, size: int = 50):
         '''
         Search in the index for objects that match the query
         '''
